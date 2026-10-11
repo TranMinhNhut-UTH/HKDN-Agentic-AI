@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI News Intelligence</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body>
+<div class="shell">
+  <aside>
+    <a class="brand" href="/">◈ <span>News Intelligence<small>AGENTIC AI LAB</small></span></a>
+    <div class="nav active">▤ &nbsp; Bản tin thông minh</div>
+    <a class="nav" href="/docs" target="_blank" rel="noopener">⌘ &nbsp; REST API / Swagger</a>
+    <div class="history-header"><h2>Lịch sử thực thi</h2><button id="refresh" class="icon" aria-label="Làm mới lịch sử">↻</button></div>
+    <div id="history" class="history"><p>Chưa có lượt chạy.</p></div>
+    <div class="sidebar-note">NV13 · NV14 · NV15<br>Collector → Analyst → Planner<br><span>Python · Gemini · SQLite</span></div>
+  </aside>
+  <main>
+    <header><span>WORKSPACE / NEWS INTELLIGENCE</span><span id="mode" class="badge">Đang tải cấu hình…</span></header>
+    <section class="intro"><div class="eyebrow">TỪ YÊU CẦU ĐẾN BẢN TIN</div><h1>Hiểu tin tức.<br><span>Có căn cứ.</span></h1><p>Để các Agent thu thập, phân tích và đánh giá thông tin cho bạn. Mỗi kết quả đều kèm nguồn và dấu vết xử lý.</p></section>
+    <div id="mode-note" class="notice" role="status"></div>
+    <form id="run-form" class="composer">
+      <label for="request">Bạn muốn tìm hiểu điều gì?</label>
+      <textarea id="request" maxlength="1000" required rows="3" placeholder="Ví dụ: Tổng hợp 5 tin về AI">Tổng hợp 5 tin về AI</textarea>
+      <div class="composer-footer"><span id="limits">Lập kế hoạch → thu thập → phân tích → đánh giá</span><button id="run-button" type="submit">Chạy AI Agent &nbsp; ↗</button></div>
+    </form>
+    <div id="error" role="alert" class="error" hidden></div>
+    <section class="execution"><div class="section-heading"><h2>Quá trình xử lý</h2><span id="status" class="badge">Sẵn sàng</span></div><ol id="steps"><li class="empty">Trace sẽ xuất hiện khi Agent bắt đầu.</li></ol></section>
+    <section><div class="section-heading"><h2 id="report-title">Bản tin của bạn</h2><div id="downloads" hidden><a id="download-md" class="download">↓ Markdown</a><a id="download-json" class="download">↓ JSON</a></div></div><p id="report-meta"></p><div id="articles" class="articles"><div class="placeholder">◈<h3>Thông tin rõ ràng. Nguồn minh bạch.</h3><p>Nhập yêu cầu để tạo bản tin đầu tiên.</p></div></div></section>
+    <footer>Trích đoạn RSS là căn cứ ban đầu. Các Agent không thay thế việc xác minh độc lập.</footer>
+  </main>
+</div>
+</body></html>

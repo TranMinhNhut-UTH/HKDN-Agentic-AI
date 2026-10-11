@@ -1,0 +1,8 @@
+[
+  {"source":"bbc","title":"[DEMO] AI hỗ trợ phân tích dữ liệu","link":"https://example.com/demo/ai-data","summary":"Dữ liệu mô phỏng: AI hỗ trợ phân tích dữ liệu trong doanh nghiệp.","published":"2026-01-01"},
+  {"source":"bbc","title":"[DEMO] AI trong giáo dục","link":"https://example.com/demo/ai-education","summary":"Dữ liệu mô phỏng: AI hỗ trợ giáo viên xây dựng bài học.","published":"2026-01-01"},
+  {"source":"techcrunch","title":"[DEMO] AI agents phối hợp","link":"https://example.com/demo/ai-agents","summary":"Dữ liệu mô phỏng: AI agents phối hợp thu thập và tổng hợp thông tin.","published":"2026-01-01"},
+  {"source":"techcrunch","title":"[DEMO] Đánh giá mô hình AI","link":"https://example.com/demo/ai-eval","summary":"Dữ liệu mô phỏng: đánh giá mô hình AI cần kiểm tra bằng chứng và giới hạn.","published":"2026-01-01"},
+  {"source":"verge","title":"[DEMO] AI và quyền riêng tư","link":"https://example.com/demo/ai-privacy","summary":"Dữ liệu mô phỏng: sử dụng AI cần bảo vệ dữ liệu cá nhân.","published":"2026-01-01"},
+  {"source":"verge","title":"[DEMO] AI tự động hóa quy trình","link":"https://example.com/demo/ai-automation","summary":"Dữ liệu mô phỏng: AI kết hợp automation xử lý công việc định kỳ.","published":"2026-01-01"}
+]

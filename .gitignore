@@ -1,0 +1,13 @@
+.venv/
+.tmp/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+pytest-cache-files-*/
+data/
+logs/
+reports/
+*.egg-info/
+
+/YouTube-Comments/
