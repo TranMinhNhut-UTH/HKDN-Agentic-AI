@@ -23,7 +23,7 @@ def test_missing_data_feedback_bounded():
 def test_budget_and_step_limit():
     with pytest.raises(BudgetExceeded):
         NewsWorkflow(Settings(max_api_calls=1)).run("AI")
-    with pytest.raises(RuntimeError, match="giới hạn bước"):
+    with pytest.raises(RuntimeError, match="Collector"):
         NewsWorkflow(Settings(max_steps=1)).run("AI")
 
 

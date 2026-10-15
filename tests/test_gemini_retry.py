@@ -127,7 +127,9 @@ def test_api_error_without_message_does_not_log_raw_body():
 
 
 def test_nv14_failure_after_rss_releases_lease_and_retry_is_safe(monkeypatch, tmp_path, caplog):
-    settings = Settings(mode="live", api_key=SECRET, data_dir=tmp_path / "data", report_dir=tmp_path / "reports")
+    settings = Settings(mode="live", api_key=SECRET, timeout=9, max_api_calls=16,
+                        max_steps=8, max_rounds=2,
+                        data_dir=tmp_path / "data", report_dir=tmp_path / "reports")
     client = MagicMock()
     monkeypatch.setattr(genai, "Client", lambda **kwargs: client)
     sleeps = []
@@ -138,18 +140,26 @@ def test_nv14_failure_after_rss_releases_lease_and_retry_is_safe(monkeypatch, tm
     call = types.FunctionCall(name="fetch_rss", args={"source": "techcrunch"})
     content = types.Content(role="model", parts=[types.Part(function_call=call)])
     response = SimpleNamespace(function_calls=[call], candidates=[SimpleNamespace(content=content)])
-    client.models.generate_content.side_effect = [response, api_error(503, f"Overloaded key={SECRET}"), api_error(503), api_error(503)]
+    client.models.generate_content.side_effect = [
+        response, api_error(503, f"Overloaded key={SECRET}"), api_error(503), api_error(504)
+    ]
     with pytest.raises(errors.ServerError):
         weekly_job(settings, day=date(2026, 10, 11))
     assert client.models.generate_content.call_count == 4 and sleeps == [1, 2]
     assert "Collector fetch_rss techcrunch" in caplog.text
+    assert "max_api_calls=16" in caplog.text
+    assert "max_steps=8" in caplog.text
+    assert "max_rounds=2" in caplog.text
+    assert "timeout=9" in caplog.text
+    assert "api_calls=4/16" in caplog.text
     assert "Weekly job failed" in caplog.text and "HTTP=503" in caplog.text and "Traceback" in caplog.text
+    assert "HTTP=504" in caplog.text and "BudgetExceeded" not in caplog.text
     assert SECRET not in caplog.text
     store = Store(settings.data_dir / "news.sqlite3")
     with store.connect() as db:
         row = db.execute("SELECT * FROM daily_jobs").fetchone()
         assert row["status"] == "failed" and row["lease_until"] == 0
-        assert "HTTP=503" in row["error"] and SECRET not in row["error"]
+        assert "HTTP=504" in row["error"] and SECRET not in row["error"]
         assert db.execute("SELECT COUNT(*) FROM reports").fetchone()[0] == 0
     # Repeat the same LIVE job with a fully stubbed successful workflow. The
     # production code never switches to mock; this factory is a test double only.

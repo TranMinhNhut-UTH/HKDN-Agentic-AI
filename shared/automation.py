@@ -45,7 +45,19 @@ def weekly_job(settings, topic="AI", day=None, workflow_factory=NewsWorkflow):
         setup_logging().info("Weekly job %s: %s", status, key)
         return {"status": status, "key": key, "report_id": report.id, "paths": [str(p) for p in paths]}
     except Exception as exc:
-        log_exception(setup_logging(), f"Weekly job failed key={key} mode={settings.mode}", exc, (settings.api_key,))
+        active_provider = provider or getattr(workflow, "provider", None)
+        budget = getattr(active_provider, "budget", None)
+        calls = getattr(budget, "calls", "n/a")
+        limit = getattr(budget, "limit", "n/a")
+        logger = setup_logging()
+        logger.error(
+            "Weekly job diagnostics key=%s mode=%s max_api_calls=%s max_steps=%s "
+            "max_rounds=%s timeout=%s api_calls=%s/%s error=%s",
+            key, settings.mode, settings.max_api_calls, settings.max_steps,
+            settings.max_rounds, settings.timeout, calls, limit,
+            exception_summary(exc, (settings.api_key,)),
+        )
+        log_exception(logger, f"Weekly job failed key={key} mode={settings.mode}", exc, (settings.api_key,))
         try:
             store.finish_daily(key, owner, "failed", error=exception_summary(exc, (settings.api_key,)))
         except Exception as storage_exc:
